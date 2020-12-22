@@ -15,8 +15,27 @@ const favouriteBlog = (blogs) => {
   return blogs.find((blog) => blog.likes === mostLikes);
 };
 
+const mostBlogs = (blogs) => {
+  const newBlogsArr = blogs.map((blog) => blog.author);
+  const mostBlogsArr = newBlogsArr.sort(
+    (a, b) =>
+      newBlogsArr.filter((v) => v === a).length -
+      newBlogsArr.filter((v) => v === b).length
+  );
+  const mostBlogsAuthor = [...mostBlogsArr].pop();
+
+  const blogCount = mostBlogsArr.filter((author) => author === mostBlogsAuthor)
+    .length;
+  const mostBlogsObj = {
+    author: mostBlogsAuthor,
+    blogs: blogCount,
+  };
+  return mostBlogsObj;
+};
+
 module.exports = {
   dummy,
   totalLikes,
   favouriteBlog,
+  mostBlogs,
 };
