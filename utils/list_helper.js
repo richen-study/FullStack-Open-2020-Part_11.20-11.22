@@ -33,9 +33,26 @@ const mostBlogs = (blogs) => {
   return mostBlogsObj;
 };
 
+const mostLikes = (blogs) => {
+  const likes = blogs.map((blog) => blog.likes);
+  const mostLikes = Math.max(...likes);
+  const mostLikedBlog = blogs.find((blog) => blog.likes === mostLikes);
+  const totalLikesAuthor = blogs
+    .filter((blog) => blog.author === mostLikedBlog.author)
+    .map((blog) => blog.likes)
+    .reduce((preValue, currValue) => preValue + currValue, 0);
+
+  const mostLikesAuthor = {
+    author: mostLikedBlog.author,
+    likes: totalLikesAuthor,
+  };
+  return mostLikesAuthor;
+};
+
 module.exports = {
   dummy,
   totalLikes,
   favouriteBlog,
   mostBlogs,
+  mostLikes,
 };
