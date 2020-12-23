@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node server.js",
     "dev": "cross-env NODE_ENV=development nodemon server.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand "
   },
   "author": "",
   "license": "ISC",
@@ -18,10 +18,12 @@
     "supertest": "^6.0.1"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
-    "mongoose": "^5.11.8"
+    "mongoose": "^5.11.8",
+    "mongoose-unique-validator": "^2.0.3"
   },
   "jest": {
     "testEnvironment": "node"
