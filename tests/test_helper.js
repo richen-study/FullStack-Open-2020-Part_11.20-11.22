@@ -23,6 +23,9 @@ const usersInDb = async () => {
   return users.map((u) => u.toJSON());
 };
 
+const URL = `/api/blogs`;
+const TOKEN = "Secret";
+
 module.exports = {
   usersInDb,
   initialUsers,

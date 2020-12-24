@@ -6,6 +6,7 @@ const User = require("../models/user");
 const api = supertest(app);
 const helper = require("../utils/blog_helper.js");
 const bcrypt = require("bcrypt");
+jest.setTimeout(30000);
 
 beforeEach(async () => {
   await Blog.deleteMany({});
@@ -73,7 +74,7 @@ describe("viewing a specific blog", () => {
 });
 
 describe("addition of a new blog", () => {
-  beforeEach(async () => {
+  test("a valid blog can be added, with user info", async () => {
     await User.deleteMany({});
 
     const passwordHash = await bcrypt.hash("sekret", 10);
@@ -84,24 +85,29 @@ describe("addition of a new blog", () => {
     });
 
     await user.save();
-  });
-  test("a valid blog can be added, with user info", async () => {
     const newBlog = {
       title: "Atomic Design",
       author: "Brad Frost",
       url: "https://bradfrost.com/blog/post/atomic-web-design/",
     };
 
+    const login = await api
+      .post("/api/login")
+      .send({ username: "root", password: "sekret" });
+
+    console.log(login.body.token);
+
     await api
       .post("/api/blogs")
       .send(newBlog)
+      .set({ Authorization: `bearer ${login.body.token}` })
       .expect(201)
       .expect("Content-Type", /application\/json/);
 
     const response = await api.get("/api/blogs");
 
     expect(response.body).toHaveLength(helper.initialBlogs.length + 1);
-    //expect(title).toContain("Atomic Design");
+    //expect(title).toContain("Atomic Design");*/
   });
 
   test("blog likes default to 0", async () => {
