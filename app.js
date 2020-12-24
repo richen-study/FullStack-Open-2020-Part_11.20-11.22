@@ -9,6 +9,7 @@ const logger = require("./utils/logger");
 const mongoose = require("mongoose");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
+const path = require("path");
 
 logger.info("connecting to", config.MONGODB_URI);
 
@@ -27,6 +28,7 @@ mongoose
   });
 
 app.use(cors());
+app.use(express.static(path.join(__dirname, "build")));
 app.use(express.json());
 
 app.use(middleware.requestLogger);
