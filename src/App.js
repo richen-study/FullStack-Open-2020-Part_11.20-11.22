@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './App.css'
 import Blog from './components/Blog'
+import Login from './components/Login'
+import Togglable from './components/Togglable'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -24,12 +27,13 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [errorColor, setErrorColor] = useState('green')
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
+    blogService
+      .getAll()
+      .then((blogs) => setBlogs(blogs.sort((a, b) => a.likes < b.likes)))
   }, [])
 
   useEffect(() => {
@@ -70,95 +74,82 @@ const App = () => {
     }
   }
 
-  const handleBlogCreate = async (event) => {
-    event.preventDefault()
-    const blogObj = {
-      name: user.name,
-      title: title,
-      author: author,
-      url: url,
-    }
+  const addBlog = (blogObj) => {
+    blogFormRef.current.toggleVisibility()
+    blogService.create(blogObj).then((returnedBlog) => {
+      const blogsCopy = [...blogs]
+      const oldBlog = blogsCopy.find((blog) => blog.id === returnedBlog.id)
+      oldBlog.likes = returnedBlog.likes
+      console.log(blogsCopy.sort((a, b) => a.likes < b.likes))
+      return setBlogs(blogsCopy.sort((a, b) => a.likes < b.likes))
+    })
+  }
 
-    const returnedBlog = await blogService.create(blogObj)
-    setBlogs(blogs.concat(returnedBlog))
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-    setErrorMessage(`A new blog ${blogObj.title} added!`)
-    setTimeout(() => {
-      setErrorMessage(null)
-    }, 5000)
+  const updateBlog = (blogObj) => {
+    blogService.update(blogObj.id, blogObj).then((returnedBlog) => {
+      const blogsCopy = [...blogs]
+      const oldBlog = blogsCopy.find((blog) => blog.id === returnedBlog.id)
+      oldBlog.likes = returnedBlog.likes
+      return setBlogs(blogsCopy.sort((a, b) => a.likes < b.likes))
+    })
+  }
+
+  const deleteBlog = (id, userToken) => {
+    blogService.remove(id, userToken).then(() => {
+      const blogsCopy = [...blogs]
+      const newBlogs = blogsCopy.filter((blog) => blog.id !== id)
+      return setBlogs(newBlogs.sort((a, b) => a.likes < b.likes))
+    })
   }
 
   const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-      <button type="submit" onClick={handleLogout}>
-        logout
-      </button>
-    </form>
+    <Togglable buttonLabel="login">
+      <Login
+        username={username}
+        password={password}
+        handleUsernameChange={({ target }) => setUsername(target.value)}
+        handlePasswordChange={({ target }) => setPassword(target.value)}
+        handleSubmit={handleLogin}
+      />
+    </Togglable>
   )
 
-  const blogsInfo = () => (
-    <div>
-      <h2>Blogs App</h2>
-      <div>{user.name} logged in </div>
-      <button type="submit" onClick={handleLogout}>
-        logout
-      </button>
-      <h2>Create a New Blog</h2>
-      <form onSubmit={handleBlogCreate}>
-        title:
-        <input
-          value={title}
-          name="Title"
-          onChange={({ target }) => setTitle(target.value)}
-        />
-        author:
-        <input
-          value={author}
-          name="Author"
-          onChange={({ target }) => setAuthor(target.value)}
-        />
-        url:
-        <input
-          value={url}
-          name="Url"
-          onChange={({ target }) => setUrl(target.value)}
-        />
-        <button type="submit" onClick={handleBlogCreate}>
-          create
-        </button>
-      </form>
-
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
-      ))}
-    </div>
+  const blogForm = () => (
+    <Togglable buttonLabel="New Blog" ref={blogFormRef}>
+      <BlogForm createBlog={addBlog} {...{ setErrorMessage, user }} />
+    </Togglable>
   )
+
+  if (!user) {
+    return (
+      <div>
+        <h1>Blog List Application</h1>
+        <Notification message={errorMessage} color={errorColor} />
+        {loginForm()}
+      </div>
+    )
+  }
 
   return (
     <div>
+      <h1>Blog List Application</h1>
       <Notification message={errorMessage} color={errorColor} />
-      {user === null ? loginForm() : blogsInfo()}
+      {user === null ? (
+        loginForm()
+      ) : (
+        <div>
+          <p>{user.name} logged in</p>
+          <button type="submit" onClick={handleLogout}>
+            logout
+          </button>
+          {blogForm()}
+        </div>
+      )}
+      <ul>
+        {blogs.map((blog, i) => (
+          <Blog key={i} {...{ blog, user, updateBlog, deleteBlog }} />
+        ))}
+      </ul>
     </div>
   )
 }
