@@ -3,7 +3,6 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const config = require('../utils/config')
-const { findById } = require('../models/blog')
 
 const getTokenFrom = (request) => {
   const authorization = request.get('authorization')
@@ -59,7 +58,6 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
-  const body = request.body
   const token = getTokenFrom(request)
   const decodedToken = jwt.verify(token, config.SECRET)
   if (!token || !decodedToken.id) {

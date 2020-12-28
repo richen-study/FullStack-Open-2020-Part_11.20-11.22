@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 const BlogDetails = ({ blog, updateBlog, user, deleteBlog, setBlogView }) => {
   const [thisBlog, setThisBlog] = useState(blog)
@@ -76,7 +76,8 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
 
   if (!blogView) {
     return (
-      <div
+      <li
+        className="blog"
         style={{
           display: 'flex',
           'flex-direction': 'column',
@@ -88,12 +89,13 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
             View Details
           </button>
         </div>
-      </div>
+      </li>
     )
   }
 
   return (
-    <div
+    <li
+      className="blog"
       style={{
         display: 'flex',
         'flex-direction': 'column',
@@ -106,7 +108,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
         </button>
       </div>
       <BlogDetails {...{ blog, user, updateBlog, deleteBlog, setBlogView }} />
-    </div>
+    </li>
   )
 }
 
