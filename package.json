@@ -10,7 +10,7 @@
     "start:react": "react-scripts start",
     "build": "react-scripts build",
     "build:ui": "rm -rf build && npm run build",
-    "test:react": "react-scripts test",
+    "test:react": "CI=true react-scripts test",
     "eject": "react-scripts eject",
     "eslint": "eslint . --fix"
   },
@@ -28,6 +28,8 @@
     "supertest": "^6.0.1"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
     "@testing-library/user-event": "^12.6.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
@@ -40,10 +42,8 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "^4.0.1"
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "react-scripts": "^4.0.1",
+    "react-test-renderer": "^17.0.1"
   },
   "eslintConfig": {
     "extends": [

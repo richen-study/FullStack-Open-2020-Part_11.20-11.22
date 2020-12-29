@@ -40,9 +40,8 @@ const BlogDetails = ({ blog, updateBlog, user, deleteBlog, setBlogView }) => {
   if (!thisBlog.user || user.id !== thisBlog.user.id) {
     return (
       <>
-        <div>Author: {thisBlog.author}</div>
-        <div>
-          Likes: {thisBlog.likes} <button onClick={handleBlogLike}>like</button>
+        <div className="likeOutput">
+          Likes: {thisBlog.likes} <button className="likeButton"onClick={handleBlogLike}>like</button>
         </div>
         <div>
           Url:
@@ -54,15 +53,14 @@ const BlogDetails = ({ blog, updateBlog, user, deleteBlog, setBlogView }) => {
 
   return (
     <>
-      <div>Author: {thisBlog.author}</div>
-      <div>
-        Likes: {thisBlog.likes} <button onClick={handleBlogLike}>like</button>
+      <div className="likeOutput">
+        Likes: {thisBlog.likes} <button className="likeButton" onClick={handleBlogLike}>like</button>
       </div>
       <div>
         Url:
         <a href={thisBlog.url}>{thisBlog.url}</a>
       </div>
-      <div>{<button onClick={handleBlogDelete}>Delete Blog</button>}</div>
+      <div><button onClick={handleBlogDelete}>Delete Blog</button></div>
     </>
   )
 }
@@ -80,11 +78,12 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
         className="blog"
         style={{
           display: 'flex',
-          'flex-direction': 'column',
+          flexDirection: 'column',
         }}
       >
         <div style={{ padding: '10px 10px 10px 0px' }}>
-          {blog.title}
+          Title: {blog.title}
+          Author: {blog.author}
           <button style={{ margin: '10px' }} onClick={handleViewChange}>
             View Details
           </button>
@@ -98,11 +97,12 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
       className="blog"
       style={{
         display: 'flex',
-        'flex-direction': 'column',
+        flexDirection: 'column',
       }}
     >
       <div style={{ padding: '10px 10px 10px 0px' }}>
-        {blog.title}
+          Title: {blog.title}
+          Author: {blog.author}
         <button style={{ margin: '10px' }} onClick={handleViewChange}>
           View Details
         </button>

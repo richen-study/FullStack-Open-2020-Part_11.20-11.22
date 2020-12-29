@@ -41,13 +41,28 @@ export default function BlogForm({ createBlog, user, setErrorMessage }) {
   return (
     <div>
       <h2>Create a New Blog</h2>
-      <form onSubmit={addBlog}>
+      <form className="blogForm" onSubmit={addBlog}>
         title:
-        <input value={title} name="Title" onChange={handleTitleChange} />
+        <input
+          id="titleInput"
+          value={title}
+          name="Title"
+          onChange={handleTitleChange}
+        />
         author:
-        <input value={author} name="Author" onChange={handleAuthorChange} />
+        <input
+          id="authorInput"
+          value={author}
+          name="Author"
+          onChange={handleAuthorChange}
+        />
         url:
-        <input value={url} name="Url" onChange={handleUrlChange} />
+        <input
+          id="urlInput"
+          value={url}
+          name="Url"
+          onChange={handleUrlChange}
+        />
         <button type="submit" onClick={addBlog}>
           Add Blog
         </button>
