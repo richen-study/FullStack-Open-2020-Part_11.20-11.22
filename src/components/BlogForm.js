@@ -41,7 +41,7 @@ export default function BlogForm({ createBlog, user, setErrorMessage }) {
   return (
     <div>
       <h2>Create a New Blog</h2>
-      <form className="blogForm" onSubmit={addBlog}>
+      <form id="blogForm" onSubmit={addBlog}>
         title:
         <input
           id="titleInput"

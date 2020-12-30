@@ -77,10 +77,7 @@ const App = () => {
   const addBlog = (blogObj) => {
     blogFormRef.current.toggleVisibility()
     blogService.create(blogObj).then((returnedBlog) => {
-      const blogsCopy = [...blogs]
-      const oldBlog = blogsCopy.find((blog) => blog.id === returnedBlog.id)
-      oldBlog.likes = returnedBlog.likes
-      console.log(blogsCopy.sort((a, b) => a.likes < b.likes))
+      const blogsCopy = blogs.concat([returnedBlog])
       return setBlogs(blogsCopy.sort((a, b) => a.likes < b.likes))
     })
   }
@@ -145,7 +142,7 @@ const App = () => {
           {blogForm()}
         </div>
       )}
-      <ul>
+      <ul id="blogList">
         {blogs.map((blog, i) => (
           <Blog key={i} {...{ blog, user, updateBlog, deleteBlog }} />
         ))}

@@ -41,7 +41,10 @@ const BlogDetails = ({ blog, updateBlog, user, deleteBlog, setBlogView }) => {
     return (
       <>
         <div className="likeOutput">
-          Likes: {thisBlog.likes} <button className="likeButton"onClick={handleBlogLike}>like</button>
+          Likes: {thisBlog.likes}{' '}
+          <button className="likeButton" onClick={handleBlogLike}>
+            like
+          </button>
         </div>
         <div>
           Url:
@@ -54,13 +57,18 @@ const BlogDetails = ({ blog, updateBlog, user, deleteBlog, setBlogView }) => {
   return (
     <>
       <div className="likeOutput">
-        Likes: {thisBlog.likes} <button className="likeButton" onClick={handleBlogLike}>like</button>
+        Likes: {thisBlog.likes}{' '}
+        <button className="likeButton" onClick={handleBlogLike}>
+          like
+        </button>
       </div>
       <div>
         Url:
         <a href={thisBlog.url}>{thisBlog.url}</a>
       </div>
-      <div><button onClick={handleBlogDelete}>Delete Blog</button></div>
+      <div>
+        <button onClick={handleBlogDelete}>Delete Blog</button>
+      </div>
     </>
   )
 }
@@ -82,9 +90,13 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
         }}
       >
         <div style={{ padding: '10px 10px 10px 0px' }}>
-          Title: {blog.title}
+          <div>Title: {blog.title}</div>
           Author: {blog.author}
-          <button style={{ margin: '10px' }} onClick={handleViewChange}>
+          <button
+            id="viewDetailsButton"
+            style={{ margin: '10px' }}
+            onClick={handleViewChange}
+          >
             View Details
           </button>
         </div>
@@ -101,8 +113,8 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
       }}
     >
       <div style={{ padding: '10px 10px 10px 0px' }}>
-          Title: {blog.title}
-          Author: {blog.author}
+        <div>Title: {blog.title}</div>
+        Author: {blog.author}
         <button style={{ margin: '10px' }} onClick={handleViewChange}>
           View Details
         </button>
