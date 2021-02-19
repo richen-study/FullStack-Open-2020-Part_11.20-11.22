@@ -32,7 +32,7 @@ jobs:
           CYPRESS_SECRET: ${{secrets.SECRET}}
         with:
           command: npm run cypress:run
-          start: npm run start
+          start: npm run start:test
           wait-on: http://localhost:3001
 
       - name: Deploy to Heroku
