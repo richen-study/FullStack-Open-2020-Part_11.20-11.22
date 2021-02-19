@@ -30,7 +30,6 @@ jobs:
           CYPRESS_MONGODB_URI: ${{secrets.MONGODB_URI}}
           CYPRESS_MONGODB_TESTURI: ${{secrets.MONGODB_TESTURI}}
           CYPRESS_SECRET: ${{secrets.SECRET}}
-          CYPRESS_PORT: 3001
         with:
           command: npm run cypress:run
           start: npm run start
