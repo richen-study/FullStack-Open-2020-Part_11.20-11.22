@@ -46,7 +46,7 @@ jobs:
           heroku_app_name: richen-bloglist
           healthcheck: 'https://richen-bloglist.herokuapp.com/api/blogs/health'
           checkstring: 'ok'
-          delay: 5
+          delay: 10
           rollbackonhealthcheckfailed: true
         if: ( github.event_name == 'push' ) && success()
       - uses: 'actions/checkout@v2'

@@ -11,7 +11,7 @@ const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const path = require('path')
 
-logger.info('connecting to', config.MONGODB_URI)
+logger.info('connecting to mongodb server')
 
 mongoose
   .connect(config.MONGODB_URI, {
