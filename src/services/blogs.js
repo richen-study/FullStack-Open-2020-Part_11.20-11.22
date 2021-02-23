@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/blogs'
+const baseUrl = '/api/blogs'
 /*
 production = '/api/blogs'
 dev = 'http://localhost:3001/api/blogs'

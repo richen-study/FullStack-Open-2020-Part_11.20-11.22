@@ -19,6 +19,8 @@ const LoginForm = ({
           <li>
             <strong>Username:</strong> richen <br /> <strong>Password:</strong>{' '}
             testpassword
+          </li>
+          <li>
             <strong>Username:</strong> kyle <br /> <strong>Password:</strong>{' '}
             testpassword
           </li>
@@ -27,6 +29,7 @@ const LoginForm = ({
 
       <form id="loginForm" onSubmit={handleSubmit}>
         <div>
+          Username
           <input
             placeholder="Type your username"
             id="usernameInput"
@@ -36,6 +39,7 @@ const LoginForm = ({
           />
         </div>
         <div>
+          Password
           <input
             placeholder="Type your password"
             id="passwordInput"
