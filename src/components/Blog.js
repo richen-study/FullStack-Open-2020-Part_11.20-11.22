@@ -35,9 +35,26 @@ const BlogDetails = ({ blog, updateBlog, user, deleteBlog, setBlogView }) => {
     }
     return
   }
-
   //Added a return for if the blog was not created by a user
-  if (!thisBlog.user || user.id !== thisBlog.user.id) {
+  if (user.username === 'root') {
+    return (
+      <>
+        <div className="likeOutput">
+          Likes: {thisBlog.likes}{' '}
+          <button className="likeButton" onClick={handleBlogLike}>
+            like
+          </button>
+        </div>
+        <div>
+          Url:
+          <a href={thisBlog.url}>{thisBlog.url}</a>
+        </div>
+        <div>
+          <button onClick={handleBlogDelete}>Delete Blog</button>
+        </div>
+      </>
+    )
+  } else if (!thisBlog.user || user.id !== thisBlog.user.id) {
     return (
       <>
         <div className="likeOutput">
@@ -52,25 +69,25 @@ const BlogDetails = ({ blog, updateBlog, user, deleteBlog, setBlogView }) => {
         </div>
       </>
     )
+  } else {
+    return (
+      <>
+        <div className="likeOutput">
+          Likes: {thisBlog.likes}{' '}
+          <button className="likeButton" onClick={handleBlogLike}>
+            like
+          </button>
+        </div>
+        <div>
+          Url:
+          <a href={thisBlog.url}>{thisBlog.url}</a>
+        </div>
+        <div>
+          <button onClick={handleBlogDelete}>Delete Blog</button>
+        </div>
+      </>
+    )
   }
-
-  return (
-    <>
-      <div className="likeOutput">
-        Likes: {thisBlog.likes}{' '}
-        <button className="likeButton" onClick={handleBlogLike}>
-          like
-        </button>
-      </div>
-      <div>
-        Url:
-        <a href={thisBlog.url}>{thisBlog.url}</a>
-      </div>
-      <div>
-        <button onClick={handleBlogDelete}>Delete Blog</button>
-      </div>
-    </>
-  )
 }
 const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   const [blogView, setBlogView] = useState(false)

@@ -7,3 +7,26 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+
+#login-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  max-width: 350px;
+}
+
+.login-input {
+  width: 240px;
+}
+
+#toggleable-container {
+}
+
+.toggle-button {
+  width: 240px;
+}
